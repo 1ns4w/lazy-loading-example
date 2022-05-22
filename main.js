@@ -21,8 +21,9 @@ const appendImageNode = () => {
   observer.observe(imageNode)
 }
 
-const dumpImageNodes = () => {
-  imagesContainer.delete()
+const popImageNode = () => {
+  const imageNodes = [...document.querySelectorAll('.images__image')]
+  imagesContainer.removeChild(imageNodes.at(-1))
 }
 
 const observer = new IntersectionObserver(async entries => {
@@ -40,4 +41,4 @@ const addImageButton = document.querySelector('#addImage')
 addImageButton.addEventListener('click', appendImageNode)
 
 const dumpImagesButton = document.querySelector('#dumpImages')
-dumpImagesButton.addEventListener('click', dumpImageNodes)
+dumpImagesButton.addEventListener('click', popImageNode)
