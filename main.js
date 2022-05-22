@@ -9,15 +9,14 @@ const getRandomFoxURL = async () => {
   }
 }
 
-const createImageNode = async () => {
+const createImageNode = () => {
   const image = document.createElement('img')
-  image.src = await getRandomFoxURL()
   image.classList.add('images__image')
   return image
 }
 
-const renderRandomFox = async () => {
-  const imageNode = await createImageNode()
+const appendImageNode = () => {
+  const imageNode = createImageNode()
   imagesContainer.appendChild(imageNode)
   observer.observe(imageNode)
 }
@@ -26,15 +25,19 @@ const dumpImageNodes = () => {
   imagesContainer.delete()
 }
 
-const observer = new IntersectionObserver(entries => {
-  const [entry] = entries // io object
-  entry.isIntersecting && observer.unobserve(entry.target) // node
+const observer = new IntersectionObserver(async entries => {
+  const [entry] = entries // intersection observer object
+  if (entry.isIntersecting) {
+    const imageNode = entry.target
+    imageNode.src = await getRandomFoxURL()
+    observer.unobserve(imageNode) // prevent further intersections observing
+  }
 })
 
 const imagesContainer = document.querySelector('#images')
 
 const addImageButton = document.querySelector('#addImage')
-addImageButton.addEventListener('click', renderRandomFox)
+addImageButton.addEventListener('click', appendImageNode)
 
 const dumpImagesButton = document.querySelector('#dumpImages')
 dumpImagesButton.addEventListener('click', dumpImageNodes)
