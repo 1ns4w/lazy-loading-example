@@ -19,11 +19,17 @@ const createImageNode = async () => {
 const renderRandomFox = async () => {
   const imageNode = await createImageNode()
   imagesContainer.appendChild(imageNode)
+  observer.observe(imageNode)
 }
 
 const dumpImageNodes = () => {
   imagesContainer.delete()
 }
+
+const observer = new IntersectionObserver(entries => {
+  const [entry] = entries // io object
+  entry.isIntersecting && observer.unobserve(entry.target) // node
+})
 
 const imagesContainer = document.querySelector('#images')
 
