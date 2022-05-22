@@ -9,32 +9,30 @@ const getRandomFoxURL = async () => {
   }
 }
 
-const createImageContainer = async () => {
-  const imageContainer = document.createElement('div')
-  imageContainer.classList.add('images__image-container')
+const createImage = async () => {
   const image = document.createElement('img')
   image.classList.add('images__image')
   image.dataset.src = await getRandomFoxURL() // prop to hold url value til its rendered on intersection
-  imageContainer.appendChild(image)
-  return imageContainer
+  return image
 }
 
 const appendImage = async () => {
-  const imageContainer = await createImageContainer()
-  imagesContainer.appendChild(imageContainer)
-  observer.observe(imageContainer.firstChild)
+  const imageNode = await createImage()
+  imagesContainer.appendChild(imageNode)
+  observer.observe(imageNode)
 }
 
 const removeImages = () => {
-  imagesContainer.remove([...imagesContainer.childNodes])
+  const images = [...imagesContainer.childNodes]
+  images.forEach(image => image.remove())
 }
 
 const observer = new IntersectionObserver(entries => {
   const [entry] = entries // intersection observer object
   if (entry.isIntersecting) {
-    const image = entry.target
-    image.src = image.dataset.src
-    observer.unobserve(image) // prevent further intersections observing
+    const imageNode = entry.target
+    imageNode.src = imageNode.dataset.src
+    observer.unobserve(imageNode) // prevent further intersections observing
   }
 })
 
