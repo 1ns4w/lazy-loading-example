@@ -9,19 +9,26 @@ const getRandomFoxURL = async () => {
   }
 }
 
-const createImageNode = (imageLink) => {
+const createImageNode = async () => {
   const image = document.createElement('img')
-  image.src = imageLink
+  image.src = await getRandomFoxURL()
   image.classList.add('images__image')
   return image
 }
 
-const renderImageNode = async () => {
-  const imagesContainer = document.querySelector('.images')
-  const randomFoxURL = await getRandomFoxURL()
-
-  const imageNode = createImageNode(randomFoxURL)
+const renderRandomFox = async () => {
+  const imageNode = await createImageNode()
   imagesContainer.appendChild(imageNode)
 }
 
-renderImageNode()
+const dumpImageNodes = () => {
+  imagesContainer.delete()
+}
+
+const imagesContainer = document.querySelector('#images')
+
+const addImageButton = document.querySelector('#addImage')
+addImageButton.addEventListener('click', renderRandomFox)
+
+const dumpImagesButton = document.querySelector('#dumpImages')
+dumpImagesButton.addEventListener('click', dumpImageNodes)

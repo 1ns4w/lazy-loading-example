@@ -21,11 +21,18 @@ body {
   font-size: 18px;
 }
 
-.images {
+.menu__buttons {
+  margin-top: 10px;
+  display: flex;
+  column-gap: 10px;
+}
+
+#images {
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
+  margin-bottom: 30px;
 }
 
 .images__image {
