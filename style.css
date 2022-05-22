@@ -35,6 +35,12 @@ body {
   margin-bottom: 40px;
 }
 
+.images__image-container {
+  display: flex;
+  background-color: gray;
+}
+
 .images__image {
+  flex: 1;
   width: 200px;
 }
